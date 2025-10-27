@@ -3,25 +3,38 @@
 ; Save this file and double-click it to run with AutoHotkey on Windows.
 
 ; When you type: /aiengineer followed by a terminating character (space, Enter, punctuation)
-; it will be replaced with the content read from ai-engineer.md file.
+; it will instantly paste the content from ai-engineer.md file using clipboard method for speed.
 
 ::/aiengineer::
-; Read content from ai-engineer.md file
-FilePath := A_ScriptDir . "\ai-engineer.md"
-FileRead, MessageContent, %FilePath%
-if ErrorLevel
 {
-    ; Fallback message if file cannot be read
-    MessageContent := "Thank you for your interest. Please find my CV at: https://docs.google.com/document/d/1mEwGZ6GG9sPfphk0-0t6tq0MxgSVuoVS/edit"
+    ; Read content from ai-engineer.md file
+    FileRead, MessageContent, ai-engineer.md
+    if ErrorLevel
+    {
+        ; Fallback message if file cannot be read
+        MessageContent := "Thank you for your interest. Please find my CV at: https://docs.google.com/document/d/1mEwGZ6GG9sPfphk0-0t6tq0MxgSVuoVS/edit"
+    }
+    
+    ; Store original clipboard content
+    ClipboardBackup := ClipboardAll
+    
+    ; Put message content in clipboard
+    Clipboard := MessageContent
+    
+    ; Wait for clipboard to be ready
+    ClipWait, 1
+    
+    ; Paste instantly using Ctrl+V
+    Send, ^v
+    
+    ; Restore original clipboard after a short delay
+    Sleep, 100
+    Clipboard := ClipboardBackup
+    ClipboardBackup := ""
 }
-; Send the content without comma after SendRaw
-SendRaw, %MessageContent%
-Return
 
 ; --- Notes ---
-; - This is a simple hotstring replacement using AutoHotkey v1 hotstrings.
-; - If you want case-insensitive matching, change the hotstring to:
-;   :i:/aiengineer::
-; - If you want to include an ending space automatically, you can append a space
-;   in the SendRaw line like: SendRaw, hello ... engineer. 
-;   But AutoHotkey will normally send the typed ending character for you.
+; - Uses clipboard method for instant pasting (much faster than SendRaw for large text)
+; - Automatically backs up and restores your original clipboard content
+; - If you want case-insensitive matching, change the hotstring to: :i:/aiengineer::
+; - The script waits for clipboard readiness and adds a small delay before restoring
