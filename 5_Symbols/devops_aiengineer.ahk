@@ -3,21 +3,21 @@
 ; Save this file and double-click it to run with AutoHotkey on Windows.
 
 ; When you type: /devopsengineer followed by a terminating character (space, Enter, punctuation)
-; it will instantly paste the content from devops-engineer.md file using clipboard method for speed.
+; it will instantly paste the content from ../4_Formula/devops-engineer.md file using clipboard method for speed.
 
 ::/devopsengineer::
 {
-    ; Read content from devops-engineer.md file with UTF-8 encoding
-    FileRead, MessageContent, *P65001 devops-engineer.md
+    ; Read content from ../4_Formula/devops-engineer.md file with UTF-8 encoding
+    FileRead, MessageContent, *P65001 ..\4_Formula\devops-engineer.md
     if ErrorLevel
     {
         ; Try reading without encoding specification as fallback
-        FileRead, MessageContent, devops-engineer.md
+        FileRead, MessageContent, ..\4_Formula\devops-engineer.md
         if ErrorLevel
         {
             ; Final fallback message if file cannot be read
-            MessageContent := "ERROR: Could not read devops-engineer.md file. Please check if the file exists in the same directory as this script."
-            MsgBox, FileRead Error: %ErrorLevel%`nFile: devops-engineer.md`nScript Dir: %A_ScriptDir%
+            MessageContent := "ERROR: Could not read ..\4_Formula\devops-engineer.md file. Please check if the file exists in the correct directory."
+            MsgBox, FileRead Error: %ErrorLevel%`nFile: ..\4_Formula\devops-engineer.md`nScript Dir: %A_ScriptDir%
         }
     }
     

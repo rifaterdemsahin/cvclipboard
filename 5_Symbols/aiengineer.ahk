@@ -3,21 +3,21 @@
 ; Save this file and double-click it to run with AutoHotkey on Windows.
 
 ; When you type: /aiengineer followed by a terminating character (space, Enter, punctuation)
-; it will instantly paste the content from ai-engineer.md file using clipboard method for speed.
+; it will instantly paste the content from ../4_Formula/ai-engineer.md file using clipboard method for speed.
 
 ::/aiengineer::
 {
-    ; Read content from ai-engineer.md file with UTF-8 encoding
-    FileRead, MessageContent, *P65001 ai-engineer.md
+    ; Read content from ../4_Formula/ai-engineer.md file with UTF-8 encoding
+    FileRead, MessageContent, *P65001 ..\4_Formula\ai-engineer.md
     if ErrorLevel
     {
         ; Try reading without encoding specification as fallback
-        FileRead, MessageContent, ai-engineer.md
+        FileRead, MessageContent, ..\4_Formula\ai-engineer.md
         if ErrorLevel
         {
             ; Final fallback message if file cannot be read
-            MessageContent := "ERROR: Could not read ai-engineer.md file. Please check if the file exists in the same directory as this script."
-            MsgBox, FileRead Error: %ErrorLevel%`nFile: ai-engineer.md`nScript Dir: %A_ScriptDir%
+            MessageContent := "ERROR: Could not read ..\4_Formula\ai-engineer.md file. Please check if the file exists in the correct directory."
+            MsgBox, FileRead Error: %ErrorLevel%`nFile: ..\4_Formula\ai-engineer.md`nScript Dir: %A_ScriptDir%
         }
     }
     
